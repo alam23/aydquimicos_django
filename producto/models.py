@@ -19,10 +19,10 @@ class Categoria(models.Model):
         return f'/{self.slug}/'
 
 class Producto(models.Model):
-    categoria = models.ForeignKey(Categoria, related_name='productos', on_delete=models.CASCADE)
+    categoria = models.ForeignKey(Categoria, related_name='productos', on_delete=models.CASCADE, blank=False)
     nombre = models.CharField(max_length=255)
     slug = models.SlugField()
-    descripcion = models.TextField(blank=True, null=True)
+    descripcion = models.TextField()
     precio = models.DecimalField(max_digits=6, decimal_places=2)
     imagen = models.ImageField(upload_to='uploads/', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)

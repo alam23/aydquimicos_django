@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.http import Http404
+from django.http import Http404,HttpResponse, JsonResponse
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -7,6 +7,8 @@ from rest_framework.decorators import api_view
 
 from .models import Producto, Categoria
 from .serializers import ProductoSerializer, CategoriaSerializer
+
+from rest_framework.parsers import JSONParser
 
 class UltimosProductosList(APIView):
     def get(self, request, format=None):
@@ -66,3 +68,34 @@ def busqueda(request):
         return Response(serializer.data)
     else:
         return Response({"productos": []})
+
+@api_view(['POST'])
+def createProduct(request):
+    #* Query es el cuerpo que se mandara para buscar
+    body = JSONParser().parse(request)
+    serializer = ProductoSerializer(data=body)
+
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse(serializer.data, status=201)
+
+    return JsonResponse(serializer.errors, status=400)
+
+@api_view(['POST'])
+def createCategory(request):
+    #* Query es el cuerpo que se mandara para buscar
+    body = JSONParser().parse(request)
+    serializer = CategoriaSerializer(data=body)
+
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse(serializer.data, status=201)
+
+    return JsonResponse(serializer.errors, status=400)
+
+    # if query:
+    #     productos = Producto.objects.filter(Q(nombre__icontains=query) | Q(descripcion__icontains=query))
+    #     serializer = ProductoSerializer(productos, many=True)
+    #     return Response(serializer.data)
+    # else:
+    #     return Response({"productos": []})
