@@ -4,6 +4,7 @@ from .models import Producto, Categoria
 
 class ProductoSerializer(serializers.ModelSerializer):
 
+
     class Meta:
         model = Producto
         fields = (
@@ -16,6 +17,9 @@ class ProductoSerializer(serializers.ModelSerializer):
             "get_thumbnail",
             "es_arriesgado"
         )
+
+    def create(self, validated_data):
+        return Producto.objects.create(**validated_data)
         
     # def to_representation(self, instance):
     #     response = super().to_representation(instance)
@@ -35,3 +39,4 @@ class CategoriaSerializer(serializers.ModelSerializer):
             "productos",
             "slug"
         ]
+    
