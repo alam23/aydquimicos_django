@@ -19,9 +19,10 @@ class CategoriaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Categoria
-        fields = (
+        fields = [
             "id",
             "nombre",
             "get_absolute_url",
             "productos",
-        )
+            "slug"
+        ]

@@ -13,4 +13,4 @@ class Cliente(models.Model):
     direccion = models.CharField(max_length=100)
     
     def __str__(self):
-        return self.user
+        return self.user.username

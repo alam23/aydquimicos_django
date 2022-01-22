@@ -11,7 +11,22 @@ from .serializers import ProductoSerializer, CategoriaSerializer
 class UltimosProductosList(APIView):
     def get(self, request, format=None):
         productos = Producto.objects.all()[0:4]
+        print(productos)
         serializer = ProductoSerializer(productos, many=True)
+        return Response(serializer.data)
+
+class AllProductsList(APIView):
+    def get(self, request, format=None):
+        productos = Producto.objects.all()
+        print(productos)
+        serializer = ProductoSerializer(productos, many=True)
+        return Response(serializer.data)
+
+class CategoriaList(APIView):
+    def get(self, request, format=None):
+        categorias = Categoria.objects.all()
+        print("Categorias", categorias)
+        serializer = CategoriaSerializer(categorias, many=True)
         return Response(serializer.data)
 
 class ProductoDetalles(APIView):
@@ -38,8 +53,11 @@ class CategoriaDetalles(APIView):
         serializer = CategoriaSerializer(categoria)
         return Response(serializer.data)
 
+
+
 @api_view(['POST'])
 def busqueda(request):
+    #* Query es el cuerpo que se mandara para buscar
     query = request.data.get('query', '')
 
     if query:
