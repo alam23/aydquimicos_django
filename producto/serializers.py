@@ -12,7 +12,8 @@ class ProductoSerializer(serializers.ModelSerializer):
             "descripcion",
             "precio",
             "get_image",
-            "get_thumbnail"
+            "get_thumbnail",
+            "es_arriesgado"
         )
 class CategoriaSerializer(serializers.ModelSerializer):
     productos = ProductoSerializer(many=True)

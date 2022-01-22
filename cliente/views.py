@@ -1,3 +1,13 @@
 from django.shortcuts import render
+from rest_framework.views import APIView
 
-# Create your views here.
+from .serializers import ClienteSerializer
+from .models import Cliente
+from rest_framework.response import Response
+
+class ClienteDetalles(APIView):
+
+    def get(self,request):
+        cliente = Cliente.objects.get(user=request.user)
+        serializer = ClienteSerializer(cliente)
+        return Response(serializer.data)

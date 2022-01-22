@@ -3,6 +3,7 @@ from PIL import Image
 
 from django.core.files import File
 from django.db import models
+from django.forms import BooleanField
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=255)
@@ -26,6 +27,7 @@ class Producto(models.Model):
     imagen = models.ImageField(upload_to='uploads/', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
     fecha_agregado = models.DateTimeField(auto_now_add=True)
+    es_arriesgado = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('-fecha_agregado',)
